@@ -1,0 +1,64 @@
+########################################
+# Android / Android Studio Git Ignore
+# 只保留源码、配置、资源文件
+# 忽略所有构建产物、缓存和 IDE 文件
+########################################
+
+# === 编译和构建目录 ===
+# Gradle 构建输出目录（每个 module 的 build/ 都忽略）
+/build/
+*/build/
+
+# === Gradle 缓存和临时文件 ===
+.gradle/
+.gradle/
+/out/
+
+# === 本地配置文件（环境相关，不应提交）===
+local.properties
+
+# === IDE 配置文件（开发环境个性化，不适合共享）===
+.idea/
+*.iml
+
+# === 生成的安装包 ===
+*.apk
+*.ap_
+*.aab
+
+# === 日志和临时文件 ===
+*.log
+
+# === 系统文件（不同操作系统生成的垃圾文件）===
+.DS_Store
+Thumbs.db
+
+# === NDK / CMake 构建缓存（如果有用到）===
+.obj/
+.externalNativeBuild/
+
+# === Android Studio Profiling 数据 ===
+captures/
+
+# === Java 编译产物（一般不会在 app/src/ 里出现，但保险忽略）===
+*.class
+*.jar
+*.war
+*.ear
+
+# === Kotlin 编译缓存（一般在 build/，这里双保险）===
+*.kotlin_module
+
+# === Jetpack Compose 预览缓存（Android Studio 自动生成）===
+.cache/
+
+########################################
+# ✅ 注意：
+# 以下文件需要提交（不要加到 ignore 里）：
+# - app/src/** (源码和资源)
+# - build.gradle / settings.gradle / gradle.properties
+# - AndroidManifest.xml
+# - proguard-rules.pro
+# - gradlew / gradlew.bat
+# - gradle/wrapper/gradle-wrapper.properties
+########################################
