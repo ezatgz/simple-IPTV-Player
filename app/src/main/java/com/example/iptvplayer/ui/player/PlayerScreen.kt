@@ -528,9 +528,9 @@ fun PlayerScreen(
                     
                     // EPG信息显示
                     uiState.currentEpg?.let { epg ->
-                        EpgInfoCard(epg, isFullscreen = false)
+                        EpgInfoCard(epg, isFullscreen = uiState.isFullscreen)
                         // 在卡片下方添加进度条
-                        EpgProgressIndicator(epg)
+                        EpgProgressIndicator(epg, isFullscreen = uiState.isFullscreen)
                     }
                     
                     // 控制��?

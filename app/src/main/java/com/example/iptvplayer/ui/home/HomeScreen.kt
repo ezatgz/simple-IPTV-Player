@@ -41,7 +41,8 @@ fun HomeScreen(
     val playlists by viewModel.playlists.collectAsState()
     var showDialog by remember { mutableStateOf(false) }
     var epgDialogPlaylist by remember { mutableStateOf<Playlist?>(null) }
-    var resultDialogState by remember { mutableStateOf<ResultDialogState?>(null) }
+    val snackbarHostState = remember { SnackbarHostState() }
+    val coroutineScope = rememberCoroutineScope()
 
     Scaffold(
         topBar = {
@@ -61,6 +62,9 @@ fun HomeScreen(
             FloatingActionButton(onClick = { showDialog = true }) {
                 Icon(Icons.Default.Add, contentDescription = "添加播放列表")
             }
+        },
+        snackbarHost = {
+            SnackbarHost(hostState = snackbarHostState)
         }
     ) { padding ->
 
@@ -91,10 +95,12 @@ fun HomeScreen(
                 viewModel = viewModel,
                 onDismiss = { showDialog = false },
                 onShowResult = { success, message ->
-                    resultDialogState = ResultDialogState(
-                        success = success,
-                        message = message
-                    )
+                    coroutineScope.launch {
+                        snackbarHostState.showSnackbar(
+                            message = message,
+                            duration = if (success) SnackbarDuration.Short else SnackbarDuration.Long
+                        )
+                    }
                 }
             )
         }
@@ -104,20 +110,13 @@ fun HomeScreen(
                 viewModel = viewModel,
                 onDismiss = { epgDialogPlaylist = null },
                 onShowResult = { success, message ->
-                    resultDialogState = ResultDialogState(
-                        success = success,
-                        message = message
-                    )
+                    coroutineScope.launch {
+                        snackbarHostState.showSnackbar(
+                            message = message,
+                            duration = if (success) SnackbarDuration.Short else SnackbarDuration.Long
+                        )
+                    }
                 }
-            )
-        }
-        
-        // 结果对话框
-        resultDialogState?.let { state ->
-            ResultDialog(
-                success = state.success,
-                message = state.message,
-                onDismiss = { resultDialogState = null }
             )
         }
     }

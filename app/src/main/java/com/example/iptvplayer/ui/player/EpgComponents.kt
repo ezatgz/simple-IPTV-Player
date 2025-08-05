@@ -132,13 +132,21 @@ fun UpcomingEpgList(epgList: List<EpgProgram>, modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun EpgProgressIndicator(epg: EpgProgram) {
+fun EpgProgressIndicator(epg: EpgProgram, isFullscreen: Boolean = false) {
     val now = System.currentTimeMillis()
     val progress = if (epg.end > epg.start) {
         ((now - epg.start).toFloat() / (epg.end - epg.start).toFloat()).coerceIn(0f, 1f)
     } else {
         0f
     }
+    
+    // 根据全屏模式设置文字颜色
+    val textColor = if (isFullscreen) {
+        androidx.compose.ui.graphics.Color.White.copy(alpha = 0.8f) // 全屏模式下使用白色文字
+    } else {
+        MaterialTheme.colorScheme.onSurfaceVariant
+    }
+    
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -150,7 +158,7 @@ fun EpgProgressIndicator(epg: EpgProgram) {
             //text = "${formatTime(epg.start)} - ${formatTime(epg.end)}",
             text = "${formatTime(epg.start)}",
             style = MaterialTheme.typography.bodyMedium,
-            color = MaterialTheme.colorScheme.onSurfaceVariant
+            color = textColor
         )
         Spacer(modifier = Modifier.width(8.dp))
         LinearProgressIndicator(
@@ -167,7 +175,7 @@ fun EpgProgressIndicator(epg: EpgProgram) {
             text = "${formatTime(epg.end)}",
             //text = "${(progress * 100).toInt()}%",
             style = MaterialTheme.typography.bodyMedium,
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            color = textColor,
             modifier = Modifier.wrapContentWidth()
         )
     }
