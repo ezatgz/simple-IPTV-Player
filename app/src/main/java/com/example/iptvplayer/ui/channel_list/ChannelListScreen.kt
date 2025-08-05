@@ -1,15 +1,18 @@
 @file:OptIn(ExperimentalFoundationApi::class)
 package com.example.iptvplayer.ui.channel_list
 
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material.icons.filled.ViewList
 import androidx.compose.material.icons.filled.ViewStream
 import androidx.compose.material3.*
@@ -24,19 +27,15 @@ import com.example.iptvplayer.viewmodel.ChannelListViewModel
 import com.example.iptvplayer.data.model.DisplayMode
 import com.example.iptvplayer.data.model.AppStateManager
 import kotlinx.coroutines.launch
-import androidx.compose.foundation.combinedClickable
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.pager.HorizontalPager
-import androidx.compose.foundation.pager.rememberPagerState
-import java.net.URLEncoder
-import java.nio.charset.StandardCharsets
+// 导入拆分后的组件
+import com.example.iptvplayer.ui.channel_list.components.*
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
 fun ChannelListScreen(
     playlistName: String,
     viewModel: ChannelListViewModel,
-    onChannelClick: (Channel) -> Unit,  // 修改为只传递Channel对象
+    onChannelClick: (Channel) -> Unit,
     onBack: () -> Unit,
     appStateManager: AppStateManager
 ) {
@@ -114,7 +113,7 @@ fun ChannelListScreen(
                                 ChannelItem(
                                     channel = channel, 
                                     epg = epg, 
-                                    onClick = { onChannelClick(channel) },  // 修改为只传递channel对象
+                                    onClick = { onChannelClick(channel) },
                                     onLongClick = { viewModel.onChannelLongClick(channel) } // 添加长按处理
                                 )
                                 HorizontalDivider()
