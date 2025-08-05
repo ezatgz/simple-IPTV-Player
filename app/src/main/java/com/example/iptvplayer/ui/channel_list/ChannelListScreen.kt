@@ -29,6 +29,8 @@ import com.example.iptvplayer.data.model.AppStateManager
 import kotlinx.coroutines.launch
 // 导入拆分后的组件
 import com.example.iptvplayer.ui.channel_list.components.*
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.ui.graphics.Color
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
