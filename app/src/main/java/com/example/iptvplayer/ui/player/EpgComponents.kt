@@ -57,10 +57,10 @@ fun EpgInfoCard(epg: EpgProgram, isFullscreen: Boolean = false) {
 }
 
 @Composable
-fun UpcomingEpgList(epgList: List<EpgProgram>) {
+fun UpcomingEpgList(epgList: List<EpgProgram>, modifier: Modifier = Modifier) {
     val currentTime = System.currentTimeMillis()
     LazyColumn(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
         //.padding(2.dp)
     ) {

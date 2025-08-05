@@ -209,14 +209,23 @@ fun LandscapeNonFullscreenLayout(
                     style = MaterialTheme.typography.titleMedium,
                     modifier = Modifier.padding(8.dp)
                 )
-                LazyColumn(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .weight(1f) // 使用权重而不是固定高度，确保在不同屏幕尺寸上都能正确显示
-                ) {
-                    items(uiState.upcomingEpg) { epg ->
-                        EpgInfoCard(epg, isFullscreen = false)
-                    }
+                // 使用UpcomingEpgList组件显示节目列表，保持与竖屏模式的一致性
+                if (uiState.upcomingEpg.isNotEmpty()) {
+                    UpcomingEpgList(
+                        epgList = uiState.upcomingEpg,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .weight(1f)
+                    )
+                } else {
+                    Text(
+                        text = "暂无节目信息",
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .weight(1f)
+                            .padding(16.dp),
+                        color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
+                    )
                 }
             }
         }
