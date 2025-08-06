@@ -11,10 +11,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.iptvplayer.data.model.EpgProgram
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Date
+import java.util.Locale
 
 @Composable
 fun EpgInfoCard(epg: EpgProgram, isFullscreen: Boolean = false) {
@@ -87,46 +89,54 @@ fun UpcomingEpgList(epgList: List<EpgProgram>, modifier: Modifier = Modifier) {
             ) {
                 // 时间信息
                 Column(
-                    //modifier = Modifier.weight(1f)
-                    modifier = Modifier.width(100.dp)
+                    modifier = Modifier.weight(1f)
+                    //modifier = Modifier.width(100.dp)
                 ) {
                     Text(
-                        text = formatTime(epg.start),
-                        style = MaterialTheme.typography.bodyMedium,
+                        text = "${formatTime(epg.start)} - ${formatTime(epg.end)}",
+                        //text = formatTime(epg.start),
+                        style = MaterialTheme.typography.labelMedium,
                         //color = MaterialTheme.colorScheme.onSurface
                         color = textColor
                     )
                     //Spacer(modifier = Modifier.height(2.dp))
                     Text(
-                        text = formatTime(epg.end),
-                        //text = epg.title,
-                        style = MaterialTheme.typography.bodySmall,
-                        //color = MaterialTheme.colorScheme.onSurfaceVariant
+                        //text = formatTime(epg.end),
+                        text = epg.title,
+                        style = MaterialTheme.typography.bodyLarge,
+                        //color = MaterialTheme.colorScheme.onSurface
                         color = textColor.copy(alpha = 0.7f)
                     )
                 }
-                // 节目信息
+                // 节目持续时间
                 Column(
                     modifier = Modifier.weight(1f)
                 ) {
-                    Text(
+                    //Text(
                         //text = formatTime(epg.end),
-                        text = epg.title,
-                        style = MaterialTheme.typography.bodyMedium,
+                    //    text = epg.title,
+                    //    style = MaterialTheme.typography.bodyMedium,
                         //color = MaterialTheme.colorScheme.onSurface
-                        color = textColor
-                    )
+                    //    color = textColor
+                    //)
                     //Spacer(modifier = Modifier.height(2.dp))
                     // 计算并显示节目持续时间
                     val duration = (epg.end - epg.start) / (1000 * 60) // 转换为分钟
                     Text(
                         text = "${duration}分钟",
-                        style = MaterialTheme.typography.bodySmall,
+                        style = MaterialTheme.typography.labelMedium,
                         //color = MaterialTheme.colorScheme.onSurfaceVariant
-                        color = textColor.copy(alpha = 0.7f)
+                        color = textColor.copy(alpha = 0.7f),
+                        modifier = Modifier.align(Alignment.End)
+
                     )
                 }
             }
+            Divider(
+                modifier = Modifier.fillMaxWidth(),
+                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.12f),
+                thickness = 1.dp
+            )
         }
     }
 }
@@ -156,7 +166,7 @@ fun EpgProgressIndicator(epg: EpgProgram, isFullscreen: Boolean = false) {
         // 显示开始时间
         Text(
             //text = "${formatTime(epg.start)} - ${formatTime(epg.end)}",
-            text = "${formatTime(epg.start)}",
+            text = "${formatTimeShort(epg.start)}",
             style = MaterialTheme.typography.bodyMedium,
             color = textColor
         )
@@ -172,7 +182,7 @@ fun EpgProgressIndicator(epg: EpgProgram, isFullscreen: Boolean = false) {
         Spacer(modifier = Modifier.width(8.dp))
         // 显示结束时间
         Text(
-            text = "${formatTime(epg.end)}",
+            text = "${formatTimeShort(epg.end)}",
             //text = "${(progress * 100).toInt()}%",
             style = MaterialTheme.typography.bodyMedium,
             color = textColor,
@@ -182,6 +192,15 @@ fun EpgProgressIndicator(epg: EpgProgram, isFullscreen: Boolean = false) {
 }
 
 fun formatTime(timestamp: Long): String {
+    //val sdf = SimpleDateFormat("HH:mm", Locale.getDefault())
+    val sdf = SimpleDateFormat("EEE HH:mm", Locale.getDefault())
+
+    return sdf.format(Date(timestamp))
+}
+
+fun formatTimeShort(timestamp: Long): String {
     val sdf = SimpleDateFormat("HH:mm", Locale.getDefault())
+    //val sdf = SimpleDateFormat("EEE HH:mm", Locale.getDefault())
+
     return sdf.format(Date(timestamp))
 }

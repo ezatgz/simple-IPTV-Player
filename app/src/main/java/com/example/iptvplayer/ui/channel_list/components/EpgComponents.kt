@@ -18,6 +18,8 @@ import com.example.iptvplayer.data.model.Channel
 import com.example.iptvplayer.data.model.EpgProgram
 import java.text.SimpleDateFormat
 import java.util.Date
+import java.util.Locale
+//import java.util.*
 
 @Composable
 fun EpgBottomSheet(
@@ -132,7 +134,7 @@ fun EpgProgramItem(program: EpgProgram, isCurrent: Boolean) {
             }
             Text(
                 text = program.title,
-                style = MaterialTheme.typography.bodyMedium,
+                style = MaterialTheme.typography.bodyLarge,
                 modifier = Modifier.padding(vertical = 4.dp)
             )
             program.desc?.let { desc ->
@@ -152,6 +154,7 @@ private fun isCurrentProgram(program: EpgProgram): Boolean {
 }
 
 private fun formatTime(millis: Long): String {
-    val sdf = SimpleDateFormat("HH:mm")
+    //val sdf = SimpleDateFormat("HH:mm")
+    val sdf = SimpleDateFormat("EEE HH:mm", Locale.getDefault())
     return sdf.format(Date(millis))
 }
