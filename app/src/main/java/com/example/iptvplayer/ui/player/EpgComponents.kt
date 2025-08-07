@@ -22,39 +22,34 @@ import java.util.Locale
 fun EpgInfoCard(epg: EpgProgram, isFullscreen: Boolean = false) {
     // 根据全屏模式设置背景颜色
     val backgroundColor = if (isFullscreen) {
-        Color.Black.copy(alpha = 0.3f) // 全屏模式下使用半透明黑色背景
+        //Color.Black.copy(alpha = 0.3f) // 全屏模式下使用半透明黑色背景
+        MaterialTheme.colorScheme.primary.copy(alpha = 0.3f)
     } else {
         MaterialTheme.colorScheme.background
     }
     
     // 根据全屏模式设置文字颜色
     val textColor = if (isFullscreen) {
-        Color.White.copy(alpha = 0.8f) // 全屏模式下使用白色文字
+        //Color.White.copy(alpha = 0.8f) // 全屏模式下使用白色文字
+        Color.White // 全屏模式下使用白色文字
     } else {
         MaterialTheme.colorScheme.onSurface
     }
-    
-    Card(
+
+
+    Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(4.dp),
-        elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
-        colors = CardDefaults.cardColors(
-            containerColor = backgroundColor
-        )
+            .padding(0.dp)                      // 外边距
+            .background(backgroundColor)        // 设置背景色
+            .padding(8.dp),                     // 内边距
+        verticalAlignment = Alignment.CenterVertically
     ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(4.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Text(
-                text = epg.title,
-                style = MaterialTheme.typography.titleMedium,
-                color = textColor
-            )
-        }
+        Text(
+            text = epg.title,
+            style = MaterialTheme.typography.titleMedium,
+            color = textColor
+        )
     }
 }
 
@@ -96,21 +91,24 @@ fun UpcomingEpgList(epgList: List<EpgProgram>, modifier: Modifier = Modifier) {
                         text = "${formatTime(epg.start)} - ${formatTime(epg.end)}",
                         //text = formatTime(epg.start),
                         style = MaterialTheme.typography.labelMedium,
-                        //color = MaterialTheme.colorScheme.onSurface
-                        color = textColor
+                        color = MaterialTheme.colorScheme.primary
+                        //color = textColor
                     )
                     //Spacer(modifier = Modifier.height(2.dp))
                     Text(
                         //text = formatTime(epg.end),
                         text = epg.title,
                         style = MaterialTheme.typography.bodyLarge,
-                        //color = MaterialTheme.colorScheme.onSurface
-                        color = textColor.copy(alpha = 0.7f)
+                        color = MaterialTheme.colorScheme.onSurface
+                        //color = textColor.copy(alpha = 0.7f)
                     )
                 }
                 // 节目持续时间
                 Column(
-                    modifier = Modifier.weight(1f)
+                    //modifier = Modifier.weight(1f),
+                    modifier = Modifier.padding(start = 48.dp),
+                    horizontalAlignment = Alignment.End
+
                 ) {
                     //Text(
                         //text = formatTime(epg.end),
@@ -125,9 +123,8 @@ fun UpcomingEpgList(epgList: List<EpgProgram>, modifier: Modifier = Modifier) {
                     Text(
                         text = "${duration}分钟",
                         style = MaterialTheme.typography.labelMedium,
-                        //color = MaterialTheme.colorScheme.onSurfaceVariant
-                        color = textColor.copy(alpha = 0.7f),
-                        modifier = Modifier.align(Alignment.End)
+                        color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.7f)
+                        //color = textColor.copy(alpha = 0.7f)
 
                     )
                 }
@@ -152,14 +149,24 @@ fun EpgProgressIndicator(epg: EpgProgram, isFullscreen: Boolean = false) {
     
     // 根据全屏模式设置文字颜色
     val textColor = if (isFullscreen) {
-        androidx.compose.ui.graphics.Color.White.copy(alpha = 0.8f) // 全屏模式下使用白色文字
+        //Color.White.copy(alpha = 0.8f) // 全屏模式下使用白色文字
+        Color.White // 全屏模式下使用白色文字
     } else {
         MaterialTheme.colorScheme.onSurfaceVariant
+    }
+    val backgroundColor = if (isFullscreen) {
+        //Color.Red.copy(alpha = 1f) // 全屏模式下使用半透明黑色背景
+        MaterialTheme.colorScheme.primary.copy(alpha = 0.3f)
+
+    } else {
+        MaterialTheme.colorScheme.background
     }
     
     Row(
         modifier = Modifier
             .fillMaxWidth()
+            .background(backgroundColor)
+            //.background(MaterialTheme.colorScheme.primary.copy(alpha = 0.3f))
             .padding(horizontal = 8.dp, vertical = 8.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -175,6 +182,7 @@ fun EpgProgressIndicator(epg: EpgProgram, isFullscreen: Boolean = false) {
             progress = { progress },
             modifier = Modifier
                 .weight(1f)
+                //.background(backgroundColor)
                 .height(4.dp),
             color = MaterialTheme.colorScheme.primary,
             trackColor = MaterialTheme.colorScheme.surfaceVariant

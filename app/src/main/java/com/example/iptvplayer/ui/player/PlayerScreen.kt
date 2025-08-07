@@ -318,10 +318,13 @@ fun PlayerScreen(
                                 Column(
                                     modifier = Modifier
                                         .fillMaxWidth()
-                                        .background(Color.Black.copy(alpha = 0.5f))
+                                        //.background(Color.Black.copy(alpha = 0.9f))
+                                        //.background(MaterialTheme.colorScheme.primary.copy(alpha = 0.3f))
+
+
                                 ) {
                                     EpgInfoCard(epg, isFullscreen = true)
-                                    EpgProgressIndicator(epg)
+                                    EpgProgressIndicator(epg, isFullscreen = uiState.isFullscreen)
                                 }
                             }
                         }
@@ -332,10 +335,10 @@ fun PlayerScreen(
                             ControlButtonBar(
                                 player = viewModel.getExoPlayer(),
                                 modifier = Modifier
-                                    .fillMaxWidth()
-                                    .background(
-                                        color = Color.Black.copy(alpha = 0.3f)
-                                    ),
+                                    .fillMaxWidth(),
+                                    //.background(
+                                    //    color = Color.Black.copy(alpha = 0.3f)
+                                    //),
                                 onToggleFullscreen = {
                                     viewModel.toggleFullscreen()
                                 },
@@ -529,7 +532,6 @@ fun PlayerScreen(
                     // EPG信息显示
                     uiState.currentEpg?.let { epg ->
                         EpgInfoCard(epg, isFullscreen = uiState.isFullscreen)
-                        // 在卡片下方添加进度条
                         EpgProgressIndicator(epg, isFullscreen = uiState.isFullscreen)
                     }
                     
@@ -537,10 +539,10 @@ fun PlayerScreen(
                     ControlButtonBar(
                         player = viewModel.getExoPlayer(),
                         modifier = Modifier
-                            .fillMaxWidth()
-                            .background(
-                                color = MaterialTheme.colorScheme.surfaceVariant
-                            ),
+                            .fillMaxWidth(),
+                            //.background(
+                            //    color = MaterialTheme.colorScheme.surfaceVariant
+                            //),
                         onToggleFullscreen = {
                             viewModel.toggleFullscreen()
                         },

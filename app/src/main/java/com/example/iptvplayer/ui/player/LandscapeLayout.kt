@@ -178,7 +178,6 @@ fun LandscapeNonFullscreenLayout(
                 // EPG信息显示
                 uiState.currentEpg?.let { epg ->
                     EpgInfoCard(epg, isFullscreen = uiState.isFullscreen)
-                    // 在卡片下方添加进度条
                     EpgProgressIndicator(epg, isFullscreen = uiState.isFullscreen)
                 }
                 
@@ -187,10 +186,10 @@ fun LandscapeNonFullscreenLayout(
                     ControlButtonBar(
                         player = viewModel.getExoPlayer(),
                         modifier = Modifier
-                            .fillMaxWidth()
-                            .background(
-                                color = MaterialTheme.colorScheme.surfaceVariant
-                            ),
+                            .fillMaxWidth(),
+                            //.background(
+                            //    color = MaterialTheme.colorScheme.surfaceVariant
+                            //),
                         onToggleFullscreen = {
                             viewModel.toggleFullscreen()
                         },

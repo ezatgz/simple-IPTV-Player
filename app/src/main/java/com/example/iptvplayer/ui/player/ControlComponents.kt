@@ -52,7 +52,9 @@ fun ControlButtonBar(
 
     // 根据全屏模式设置背景颜色
     val backgroundColor = if (isFullscreen) {
-        Color.Black.copy(alpha = 0.3f) // 全屏模式下使用半透明黑色背景
+        //Color.Black.copy(alpha = 0.3f) // 全屏模式下使用半透明黑色背景
+        MaterialTheme.colorScheme.primary.copy(alpha = 0.3f) // 全屏模式下使用半透明背景
+
     } else {
         MaterialTheme.colorScheme.background // 非全屏模式下使用主题默认的背景颜色
     }
