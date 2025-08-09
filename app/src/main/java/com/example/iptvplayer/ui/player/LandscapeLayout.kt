@@ -3,15 +3,12 @@
 package com.example.iptvplayer.ui.player
 
 import android.media.AudioManager
-import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
 import android.widget.FrameLayout
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.*
@@ -24,10 +21,9 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.media3.common.util.UnstableApi
-import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.ui.PlayerView
 import com.example.iptvplayer.data.model.ChannelSwitchMode
-import com.example.iptvplayer.data.model.EpgProgram
+import com.example.iptvplayer.utils.DeviceTypeUtils
 import com.example.iptvplayer.viewmodel.PlayerUiState
 import com.example.iptvplayer.viewmodel.PlayerViewModel
 import kotlinx.coroutines.CoroutineScope
@@ -57,17 +53,31 @@ fun LandscapeNonFullscreenLayout(
     onVolumePercentageChange: (Int?) -> Unit,
     onBrightnessPercentageChange: (Int?) -> Unit
 ) {
+    val context = LocalContext.current
+    val deviceType = DeviceTypeUtils.getDeviceType(context)
     Scaffold(
-        topBar = {
-            TopAppBar(
-                title = { Text(uiState.currentChannel?.name ?: "正在加载...") },
-                navigationIcon = {
-                    IconButton(onClick = onBack) {
-                        Icon(Icons.AutoMirrored.Default.ArrowBack, contentDescription = "返回")
-                    }
+//        topBar = {
+//            TopAppBar(
+//                title = { Text(uiState.currentChannel?.name ?: "正在加载...") },
+//                navigationIcon = {
+//                    IconButton(onClick = onBack) {
+//                        Icon(Icons.AutoMirrored.Default.ArrowBack, contentDescription = "返回")
+//                    }
+//                }
+//            )
+//        }
+            topBar = {
+                if (deviceType != "Phone") {
+                    TopAppBar(
+                        title = { Text(uiState.currentChannel?.name ?: "正在加载...") },
+                        navigationIcon = {
+                            IconButton(onClick = onBack) {
+                                Icon(Icons.AutoMirrored.Default.ArrowBack, contentDescription = "返回")
+                            }
+                        }
+                    )
                 }
-            )
-        }
+            }
     ) { padding ->
         Row(
             modifier = Modifier
@@ -77,7 +87,7 @@ fun LandscapeNonFullscreenLayout(
             // 左侧 - 视频播放区域
             Column(
                 modifier = Modifier
-                    .weight(1f) // 修改为1f，使左右区域各占一半宽度
+                    .weight(2f) // 修改为2f，使左区域占2/3宽度
             ) {
                 // 视频播放窗口
                 Box(
@@ -176,11 +186,20 @@ fun LandscapeNonFullscreenLayout(
                 }
                 
                 // EPG信息显示
-                uiState.currentEpg?.let { epg ->
-                    EpgInfoCard(epg, isFullscreen = uiState.isFullscreen)
-                    EpgProgressIndicator(epg, isFullscreen = uiState.isFullscreen)
+                //val context = LocalContext.current
+                //val deviceType = DeviceTypeUtils.getDeviceType(context)
+                // 不是手机时的逻辑
+                if (deviceType != "Phone") {
+                    uiState.currentEpg?.let { epg ->
+                        EpgInfoCard(epg, isFullscreen = uiState.isFullscreen)
+                        EpgProgressIndicator(epg, isFullscreen = uiState.isFullscreen)
+                    }
                 }
-                
+//                uiState.currentEpg?.let { epg ->
+//                    EpgInfoCard(epg, isFullscreen = uiState.isFullscreen)
+//                    EpgProgressIndicator(epg, isFullscreen = uiState.isFullscreen)
+//                }
+//
                 // 控制栏
                 if (isControlBarVisibleInNormalMode) {
                     ControlButtonBar(
@@ -197,15 +216,22 @@ fun LandscapeNonFullscreenLayout(
                     )
                 }
             }
-            
+            Spacer(modifier = Modifier.width(16.dp))
             // 右侧 - 节目列表
             Column(
                 modifier = Modifier
-                    .weight(1f) // 修改为1f，使左右区域各占一半宽度
+                    .weight(1f) // 修改为1f，使右区域占1/3宽度
             ) {
+                //val titleText = uiState.currentChannel?.name ?: "正在加载..."
+                val titleText = if (deviceType != "Phone") {
+                    "节目列表"
+                } else {
+                    uiState.currentChannel?.name ?: "正在加载..."
+                }
                 Text(
-                    text = "节目列表",
-                    style = MaterialTheme.typography.titleMedium,
+                    //text = "节目列表",
+                    text = titleText,
+                    style = MaterialTheme.typography.titleLarge,
                     modifier = Modifier.padding(8.dp)
                 )
                 // 使用UpcomingEpgList组件显示节目列表，保持与竖屏模式的一致性
