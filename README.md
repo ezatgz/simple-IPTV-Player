@@ -17,7 +17,8 @@
 
 | 主页 | 频道列表 | 播放界面(竖屏) | 播放界面(横屏) |
 |------|----------|----------------|----------------|
-| ![主页](screenshots/home.png) | ![频道列表](screenshots/channels.png) | ![播放界面竖屏](screenshots/player_portrait.png) | ![播放界面横屏](screenshots/player_landscape.png) |
+|![主页1](screenshots/home1.png) | ![频道列表](screenshots/channels.png) | ![播放界面](screenshots/player1.png) | ![播放界面](screenshots/player2.png) |
+| ![主页](screenshots/home2.png) | ![频道列表](screenshots/epg.png) | ![播放界面](screenshots/setting.png) | ![播放界面](screenshots/player3.png) |
 
 ## 技术栈
 
@@ -78,16 +79,54 @@
 ```
 app/src/main/java/com/example/iptvplayer/
 ├── data/
-│   ├── local/          # 本地数据存储(Room数据库)
-│   └── model/          # 数据模型和状态管理
-├── repository/         # 数据仓库
+│   ├── local/          
+│   │   ├── AppDatabase.kt        # Room数据库定义
+│   │   └── Daos.kt               # Data Access Objects
+│   └── model/          
+│       ├── AppStateManager.kt    # 应用状态管理
+│       ├── Models.kt             # 数据模型定义
+│       └── Settings.kt           # 设置相关数据类
+├── repository/         
+│   └── IptvRepository.kt         # 数据仓库实现
 ├── ui/
-│   ├── home/           # 主页界面
-│   ├── channel_list/   # 频道列表界面
-│   ├── player/         # 播放器界面
-│   ├── settings/       # 设置界面
-│   └── theme/          # 主题相关
-└── viewmodel/          # 视图模型
+│   ├── channel_list/   
+│   │   ├── ChannelListScreen.kt  # 频道列表界面
+│   │   └── components/           # 频道列表组件
+│   │       ├── ChannelItemComponents.kt
+│   │       ├── ChannelPagerComponents.kt
+│   │       └── EpgComponents.kt
+│   ├── home/           
+│   │   ├── HomeScreen.kt         # 主页界面
+│   │   └── components/           # 主页组件
+│   │       ├── AddPlaylistDialog.kt
+│   │       ├── AssignEpgDialog.kt
+│   │       └── PlaylistItem.kt
+│   ├── player/         
+│   │   ├── PlayerScreen.kt       # 播放器界面
+│   │   ├── ControlComponents.kt  # 播放控制组件
+│   │   ├── EpgComponents.kt      # 节目指南组件
+│   │   ├── FullscreenManager.kt  # 全屏管理
+│   │   ├── GestureHandlers.kt    # 手势处理
+│   │   └── LandscapeLayout.kt    # 横屏布局
+│   ├── settings/       
+│   │   ├── SettingsScreen.kt     # 设置界面
+│   │   └── components/           # 设置组件
+│   │       ├── ChannelSwitchModeComponents.kt
+│   │       ├── FullscreenOrientationComponents.kt
+│   │       ├── SettingItemComponents.kt
+│   │       └── ThemeSettingComponents.kt
+│   ├── theme/          
+│   │   ├── Color.kt              # 颜色定义
+│   │   ├── Theme.kt              # 主题定义
+│   │   └── Type.kt               # 字体排版定义
+│   └── utils/          
+│       └── DeviceTypeUtils.kt    # 设备类型工具类
+└── viewmodel/          
+    ├── ChannelListViewModel.kt   # 频道列表ViewModel
+    ├── DisplayMode.kt            # 显示模式枚举
+    ├── MainViewModel.kt          # 主界面ViewModel
+    ├── PlayerViewModel.kt        # 播放器ViewModel
+    └── SettingsViewModel.kt      # 设置ViewModel
 ```
 
 ## 贡献
@@ -97,5 +136,3 @@ app/src/main/java/com/example/iptvplayer/
 ## 许可证
 
 [Apache License 2.0](LICENSE)
-
-```
