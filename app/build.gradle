@@ -19,6 +19,15 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    splits {
+        abi {
+            reset()
+            enable true  // 启用 ABI 分割
+            universalApk true  // 是否生成一个包含所有 ABI 的 universal APK
+            include 'armeabi-v7a', 'arm64-v8a', 'x86', 'x86_64'
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled false
