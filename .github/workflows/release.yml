@@ -5,7 +5,6 @@ on:
     tags:
       - 'v*'   # 只有 push tag 才触发，例如 v1.0
   workflow_dispatch:  # 允许手动触发
-  
 
 jobs:
   build:
@@ -32,10 +31,14 @@ jobs:
           restore-keys: |
             gradle-
 
+      - name: Make Gradlew Executable
+        run: chmod +x ./gradlew
+
       - name: Build APK
         run: ./gradlew assembleDebug
 
-      - name: Upload APKs to release
+      - name: Create GitHub Release
+        id: release
         uses: softprops/action-gh-release@v1
         with:
           tag_name: ${{ github.ref_name }}
@@ -45,42 +48,16 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Attach APKs
-        uses: actions/upload-release-asset@v1
-        with:
-          upload_url: ${{ steps.release.outputs.upload_url }}
-          asset_path: app/build/outputs/apk/debug/app-universal-debug.apk
-          asset_name: app-universal-debug.apk
-          asset_content_type: application/vnd.android.package-archive
-
-      - name: Attach x86 APK
-        uses: actions/upload-release-asset@v1
-        with:
-          upload_url: ${{ steps.release.outputs.upload_url }}
-          asset_path: app/build/outputs/apk/debug/app-x86-debug.apk
-          asset_name: app-x86-debug.apk
-          asset_content_type: application/vnd.android.package-archive
-
-      - name: Attach armeabi-v7a APK
-        uses: actions/upload-release-asset@v1
-        with:
-          upload_url: ${{ steps.release.outputs.upload_url }}
-          asset_path: app/build/outputs/apk/debug/app-armeabi-v7a-debug.apk
-          asset_name: app-armeabi-v7a-debug.apk
-          asset_content_type: application/vnd.android.package-archive
-
-      - name: Attach arm64-v8a APK
-        uses: actions/upload-release-asset@v1
-        with:
-          upload_url: ${{ steps.release.outputs.upload_url }}
-          asset_path: app/build/outputs/apk/debug/app-arm64-v8a-debug.apk
-          asset_name: app-arm64-v8a-debug.apk
-          asset_content_type: application/vnd.android.package-archive
-
-      - name: Attach x86_64 APK
-        uses: actions/upload-release-asset@v1
-        with:
-          upload_url: ${{ steps.release.outputs.upload_url }}
-          asset_path: app/build/outputs/apk/debug/app-x86_64-debug.apk
-          asset_name: app-x86_64-debug.apk
-          asset_content_type: application/vnd.android.package-archive
+      - name: Upload all APKs
+        run: |
+          APK_DIR=app/build/outputs/apk/debug
+          for apk in $APK_DIR/*.apk; do
+            echo "Uploading $apk"
+            curl -sL -X POST "$UPLOAD_URL" \
+              -H "Authorization: token $GITHUB_TOKEN" \
+              -H "Content-Type: application/vnd.android.package-archive" \
+              --data-binary @"$apk"
+          done
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          UPLOAD_URL: ${{ steps.release.outputs.upload_url }}
