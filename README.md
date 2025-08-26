@@ -1,4 +1,4 @@
-# IPTV Player
+# Simple IPTV Player
 
 一个基于 Android Jetpack Compose 开发的现代 IPTV 播放器应用，支持播放 M3U 格式的 IPTV 播放列表和 XMLTV 格式的电子节目指南 (EPG)。
 
