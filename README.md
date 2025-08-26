@@ -15,10 +15,14 @@
 
 ## 屏幕截图
 
-| 主页 | 频道列表 | 播放界面(竖屏) | 播放界面(横屏) |
-|------|----------|----------------|----------------|
-|![主页1](screenshots/home1.png) | ![频道列表](screenshots/channels.png) | ![播放界面](screenshots/player1.png) | ![播放界面](screenshots/player2.png) |
-| ![主页](screenshots/home2.png) | ![频道列表](screenshots/epg.png) | ![播放界面](screenshots/setting.png) | ![播放界面](screenshots/player3.png) |
+![主页1](screenshots/home1.png)
+![主页2](screenshots/home2.png)
+![设置界面](screenshots/setting.png)
+![频道列表1](screenshots/channels.png) 
+![频道列表2](screenshots/epg.png)
+![播放界面1](screenshots/player1.png)
+![播放界面2](screenshots/player2.png) |
+![播放界面3](screenshots/player3.png) |
 
 ## 技术栈
 

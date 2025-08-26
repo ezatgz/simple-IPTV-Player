@@ -8,6 +8,9 @@
 # Gradle 构建输出目录（每个 module 的 build/ 都忽略）
 /build/
 */build/
+/app/build/
+/app/release/
+
 
 # === Gradle 缓存和临时文件 ===
 .gradle/

@@ -10,7 +10,7 @@ android {
     compileSdk 36
 
     defaultConfig {
-        applicationId "com.example.iptvplayer"
+        applicationId "com.ezatgz.simpleiptvplayer"
         minSdk 28
         targetSdk 36
         versionCode 1
@@ -30,7 +30,8 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
