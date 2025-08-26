@@ -15,35 +15,21 @@
 
 ## 屏幕截图
 
-<style>
-  p {
-    display: flex;
-    justify-content: center;
-    gap: 20px; /* 图片之间的间距 */
-  }
-  .shadow-img {
-    box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.3);
-  }
-  .strong-shadow {
-    box-shadow: 6px 6px 12px rgba(0, 0, 0, 0.5);
-  }
-</style>
-
 <p align="center">
-  <img src="screenshots/home1.png" width="250" class="shadow-img"/>
-  <img src="screenshots/home2.png" width="250" class="shadow-img"/>
-  <img src="screenshots/setting.png" width="250" class="shadow-img"/>
+  <img src="screenshots/home1.png" width="250"/>
+  <img src="screenshots/home2.png" width="250"/>
+  <img src="screenshots/setting.png" width="250"/>
 </p>
 
 <p align="center">
-  <img src="screenshots/channels.png" width="250" class="shadow-img"/>
-  <img src="screenshots/epg.png" width="250" class="shadow-img"/>
-  <img src="screenshots/player1.png" width="250" class="shadow-img"/>
+  <img src="screenshots/channels.png" width="250"/>
+  <img src="screenshots/epg.png" width="250"/>
+  <img src="screenshots/player1.png" width="250"/>
 </p>
 
 <p align="center">
-  <img src="screenshots/player2.png" width="385" class="shadow-img"/>
-  <img src="screenshots/player3.png" width="385" class="shadow-img"/>
+  <img src="screenshots/player2.png" width="375"/>
+  <img src="screenshots/player3.png" width="375"/>
 </p>
 
 
