@@ -15,14 +15,24 @@
 
 ## 屏幕截图
 
-![主页1](screenshots/home1.png)
-![主页2](screenshots/home2.png)
-![设置界面](screenshots/setting.png)
-![频道列表1](screenshots/channels.png) 
-![频道列表2](screenshots/epg.png)
-![播放界面1](screenshots/player1.png)
-![播放界面2](screenshots/player2.png) |
-![播放界面3](screenshots/player3.png) |
+<p align="center">
+  <img src="screenshots/home1.png" width="250"/>
+  <img src="screenshots/home2.png" width="250"/>
+  <img src="screenshots/setting.png" width="250"/>
+</p>
+
+<p align="center">
+  <img src="screenshots/channels.png" width="250"/>
+  <img src="screenshots/epg.png" width="250"/>
+  <img src="screenshots/player1.png" width="250"/>
+</p>
+
+<p align="center">
+  <img src="screenshots/player2.png" width="375"/>
+  <img src="screenshots/player3.png" width="375"/>
+</p>
+
+
 
 ## 技术栈
 
